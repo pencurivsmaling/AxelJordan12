@@ -1,26 +1,32 @@
 package com.gayung.qrscanner;
 
 import android.support.annotation.NonNull;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -28,11 +34,10 @@ import java.util.List;
 
 public class PesertaActivity extends AppCompatActivity {
 
-    ListView listViewPeserta;
     DatabaseReference databaseReference;
-    List<Data> pesertaList;
-    EditText text_Search;
-    Button btn_Search;
+    ArrayList<Data> list;
+    RecyclerView recyclerView;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +45,15 @@ public class PesertaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_peserta);
 
         FirebaseApp.initializeApp(this);
-
-//        btn_Search = findViewById(R.id.btn_Search);
-//        text_Search= findViewById(R.id.text_Search);
-        listViewPeserta= findViewById(R.id.listViewPeserta);
-
         databaseReference = FirebaseDatabase.getInstance().getReference("data");
 
-        pesertaList = new ArrayList<>();
+        searchView = findViewById(R.id.search_Attack);
+
+        recyclerView = findViewById(R.id.recyclerViewPeserta);
+        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
     }
 
@@ -55,24 +61,58 @@ public class PesertaActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        if (databaseReference!=null){
 
-                pesertaList.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren() ){
-                    Data data = dataSnapshot1.getValue(Data.class);
-                    pesertaList.add(data);
+       databaseReference.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               if (dataSnapshot.exists()){
+                   list = new ArrayList<>();
+                   for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+
+                       list.add(dataSnapshot1.getValue(Data.class));
+                   }
+                   PesertaRecyclerAdapter pesertaAdapter = new PesertaRecyclerAdapter(list);
+                   recyclerView.setAdapter(pesertaAdapter);
+
+               }
+
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError databaseError) {
+
+               Toast.makeText(PesertaActivity.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+           }
+       });
+        }
+
+        if (searchView!=null){
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
                 }
 
-                PesertaList adapter = new PesertaList(PesertaActivity.this,pesertaList);
-                listViewPeserta.setAdapter(adapter);
-            }
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    firebaseSearch(newText);
+                    return true;
+                }
+            });
+        }
+    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+    private void firebaseSearch(String input) {
+        ArrayList<Data> mylist = new ArrayList<>();
+        for(Data object : list){
 
+            if (object.getNama().toLowerCase().contains(input.toLowerCase())){
+                mylist.add(object);
             }
-        });
+            PesertaRecyclerAdapter pesertaAdapter = new PesertaRecyclerAdapter(mylist);
+            recyclerView.setAdapter(pesertaAdapter);
+        }
     }
 }

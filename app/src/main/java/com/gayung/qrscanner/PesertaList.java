@@ -26,7 +26,7 @@ public class PesertaList extends ArrayAdapter<Data> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = context.getLayoutInflater();
+       LayoutInflater inflater = context.getLayoutInflater();
 
         View listViewItem = inflater.inflate(R.layout.list_peserta,null,true);
 
