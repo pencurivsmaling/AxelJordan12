@@ -41,8 +41,8 @@ public class PesertaActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
 
-        btn_Search = findViewById(R.id.btn_Search);
-        text_Search= findViewById(R.id.text_Search);
+//        btn_Search = findViewById(R.id.btn_Search);
+//        text_Search= findViewById(R.id.text_Search);
         listViewPeserta= findViewById(R.id.listViewPeserta);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("data");
