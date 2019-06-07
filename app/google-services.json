@@ -1,58 +1,21 @@
 {
   "project_info": {
-    "project_number": "264877851856",
-    "firebase_url": "https://pendaftaranqrcode.firebaseio.com",
-    "project_id": "pendaftaranqrcode",
-    "storage_bucket": "pendaftaranqrcode.appspot.com"
+    "project_number": "167218957228",
+    "firebase_url": "https://daftarsanmon.firebaseio.com",
+    "project_id": "daftarsanmon",
+    "storage_bucket": "daftarsanmon.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:264877851856:android:6a345f9d16977aae",
-        "android_client_info": {
-          "package_name": "com.cihuy.pendaftaran_qrcode"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "264877851856-vj29ki7qm85lhensivah2qeavv2ah7qe.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.cihuy.pendaftaran_qrcode",
-            "certificate_hash": "c306a3a6493549642facc2d36731405bdda056a7"
-          }
-        },
-        {
-          "client_id": "264877851856-ocf35qvepod0iv2m8v6rgu9c4c2k464e.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAaeMw0UjhBO0gcfxe2kD07Kq3sMEE8dQo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "264877851856-ocf35qvepod0iv2m8v6rgu9c4c2k464e.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:264877851856:android:223611c7b50a7ae4",
+        "mobilesdk_app_id": "1:167218957228:android:223611c7b50a7ae4",
         "android_client_info": {
           "package_name": "com.gayung.qrscanner"
         }
       },
       "oauth_client": [
         {
-          "client_id": "264877851856-gh6frhjhc7u6lp1h45t16ve4b7a56k1b.apps.googleusercontent.com",
+          "client_id": "167218957228-ijkhtjki48d2oiu29n6j895854imbfig.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.gayung.qrscanner",
@@ -60,20 +23,20 @@
           }
         },
         {
-          "client_id": "264877851856-ocf35qvepod0iv2m8v6rgu9c4c2k464e.apps.googleusercontent.com",
+          "client_id": "167218957228-oalcqfs49n1slqnvbs6rbnran94l8kbd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAaeMw0UjhBO0gcfxe2kD07Kq3sMEE8dQo"
+          "current_key": "AIzaSyA5tnYnHSrX9j5zRzS4pTqQu3duvF1Xng8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "264877851856-ocf35qvepod0iv2m8v6rgu9c4c2k464e.apps.googleusercontent.com",
+              "client_id": "167218957228-oalcqfs49n1slqnvbs6rbnran94l8kbd.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

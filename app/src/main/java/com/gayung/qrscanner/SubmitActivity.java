@@ -85,7 +85,7 @@ public class SubmitActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(nama)&& checkBox.isChecked() && !TextUtils.isEmpty(code)){
             // String id = databaseReference.push().getKey();
             Data data3 = new Data(nama,code);
-            databaseReference.child(nama).setValue(data3);
+            databaseReference.child(code).setValue(data3);
             Toast.makeText(this,"Berhasil Input", Toast.LENGTH_LONG).show();
             finish();
         }else if (!checkBox.isChecked()){
