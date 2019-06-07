@@ -23,18 +23,21 @@ public class PesertaRecyclerAdapter extends RecyclerView.Adapter<PesertaRecycler
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_peserta,parent,false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
         holder.nama1.setText(list.get(position).getNama());
         holder.code1.setText(list.get(position).getCode());
     }
 
     @Override
     public int getItemCount() {
+
         return list.size();
     }
 

@@ -57,15 +57,12 @@ public class ManualActivity extends AppCompatActivity {
 
 
         if (!TextUtils.isEmpty(nama) && checkBox.isChecked() && !TextUtils.isEmpty(code)){
-            String id = databaseReference.push().getKey();
-//            Data nama1 = new Data(nama);
-//            Data code1 = new Data(code);
+
             Data data = new Data(nama,code);
             databaseReference.child(code).setValue(data);
-            //databaseReference.setValue(data);
 
             Toast.makeText(this,"Berhasil Input", Toast.LENGTH_LONG).show();
-            //setResult(RESULT_OK,intent);
+
             finish();
         }else {
             Toast.makeText(this,"Input Invalid", Toast.LENGTH_LONG).show();

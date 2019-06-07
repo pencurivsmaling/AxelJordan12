@@ -32,6 +32,7 @@ public class SubmitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit);
 
+        //Initialize Variable
         FirebaseApp.initializeApp(this);
         btn_Scan = findViewById(R.id.btn_Scan1);
         btn_Submit = findViewById(R.id.btn_Submit1);
@@ -39,8 +40,10 @@ public class SubmitActivity extends AppCompatActivity {
         result= findViewById(R.id.qr_code);
         checkBox = findViewById(R.id.checkBox);
 
+        //Firebase
         databaseReference = FirebaseDatabase.getInstance().getReference("data");
 
+        //Onclicklistener -> Jalan kalau tombol di klik
         btn_Scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +60,7 @@ public class SubmitActivity extends AppCompatActivity {
         });
     }
 
+    //Setelah hasil Barcode terbaca
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK){
@@ -72,15 +76,16 @@ public class SubmitActivity extends AppCompatActivity {
         }
     }
 
+    //Memasukan data ke Firebase
     private void addData() {
 
         String nama = text_Nama.getText().toString().trim();
-        String result1 = result.getText().toString();
+        String code = result.getText().toString();
 
-        if (!TextUtils.isEmpty(nama)&& checkBox.isChecked() && !TextUtils.isEmpty(result1)){
-            String id = databaseReference.push().getKey();
-            Data data3 = new Data(nama,result1);
-            databaseReference.child(result1).setValue(data3);
+        if (!TextUtils.isEmpty(nama)&& checkBox.isChecked() && !TextUtils.isEmpty(code)){
+            // String id = databaseReference.push().getKey();
+            Data data3 = new Data(nama,code);
+            databaseReference.child(nama).setValue(data3);
             Toast.makeText(this,"Berhasil Input", Toast.LENGTH_LONG).show();
             finish();
         }else if (!checkBox.isChecked()){

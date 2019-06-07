@@ -86,6 +86,7 @@ public class ScanActivity extends AppCompatActivity {
 
             }
 
+            //Hasil Barcode Terbaca
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();

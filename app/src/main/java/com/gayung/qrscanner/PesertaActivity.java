@@ -30,10 +30,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PesertaActivity extends AppCompatActivity {
 
+    //Variable
     DatabaseReference databaseReference;
     ArrayList<Data> list;
     RecyclerView recyclerView;
@@ -44,14 +47,16 @@ public class PesertaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peserta);
 
+        //Database Initialize
         FirebaseApp.initializeApp(this);
         databaseReference = FirebaseDatabase.getInstance().getReference("data");
 
+        //SearchView Initialize
         searchView = findViewById(R.id.search_Attack);
 
+        //RecyclerView Initialize
         recyclerView = findViewById(R.id.recyclerViewPeserta);
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -61,17 +66,28 @@ public class PesertaActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //Pengambilan data dari Firebase
         if (databaseReference!=null){
-
-       databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               //Data ditemukan, Copy dr database ke adapter
                if (dataSnapshot.exists()){
                    list = new ArrayList<>();
                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
 
                        list.add(dataSnapshot1.getValue(Data.class));
                    }
+
+                   //Sort Data byName
+                   Collections.sort(list, new Comparator<Data>() {
+                       @Override
+                       public int compare(Data o1, Data o2) {
+                           return o1.getNama().compareToIgnoreCase(o2.getNama());
+                       }
+                   });
+
+                   //Taro data ke RecyclerView
                    PesertaRecyclerAdapter pesertaAdapter = new PesertaRecyclerAdapter(list);
                    recyclerView.setAdapter(pesertaAdapter);
 
@@ -79,14 +95,15 @@ public class PesertaActivity extends AppCompatActivity {
 
            }
 
+           //Kalo ketemu Error
            @Override
            public void onCancelled(@NonNull DatabaseError databaseError) {
-
                Toast.makeText(PesertaActivity.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
            }
        });
         }
 
+        //Searchview ada tulisan
         if (searchView!=null){
 
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -104,13 +121,17 @@ public class PesertaActivity extends AppCompatActivity {
         }
     }
 
+    //Fungsi Search
     private void firebaseSearch(String input) {
         ArrayList<Data> mylist = new ArrayList<>();
         for(Data object : list){
 
             if (object.getNama().toLowerCase().contains(input.toLowerCase())){
                 mylist.add(object);
+            }else if(object.getCode().toLowerCase().contains(input.toLowerCase())){
+                mylist.add(object);
             }
+
             PesertaRecyclerAdapter pesertaAdapter = new PesertaRecyclerAdapter(mylist);
             recyclerView.setAdapter(pesertaAdapter);
         }

@@ -19,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
     Button btn_Detect;
     Button btn_Manual;
     Button btn_Peserta;
-    TextView result;
-    public static final int REQUEST_CODE=100;
     public static final int PERMISSION_REQUEST=200;
 
     @Override
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SubmitActivity.class);
-//                startActivityForResult(intent, REQUEST_CODE);
                 startActivity(intent);
 
             }
@@ -71,18 +68,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK){
-//            if(data != null){
-//                final Barcode barcode = data.getParcelableExtra("barcode");
-//                result.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        result.setText(barcode.displayValue);
-//                    }
-//                });
-//            }
-//        }
-//    }
 }
