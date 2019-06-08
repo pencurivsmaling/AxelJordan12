@@ -42,8 +42,8 @@ public class DeleteActivity extends AppCompatActivity {
 
                 if ( checkBox.isChecked() && !TextUtils.isEmpty(code)){
                     // String id = databaseReference.push().getKey();
-                    databaseReference.child(code).removeValue();
-                    Toast.makeText(DeleteActivity.this,"Berhasil Delete", Toast.LENGTH_LONG).show();
+                    databaseReference.child(code).child("hadir").setValue(false);
+                    Toast.makeText(DeleteActivity.this,"Berhasil Ubah", Toast.LENGTH_LONG).show();
                     finish();
                 }else if (!checkBox.isChecked()){
                     Toast.makeText(DeleteActivity.this,"Konfirmasi Checkbox", Toast.LENGTH_LONG).show();

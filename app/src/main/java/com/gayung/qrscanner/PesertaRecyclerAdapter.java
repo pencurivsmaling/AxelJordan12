@@ -34,7 +34,12 @@ public class PesertaRecyclerAdapter extends RecyclerView.Adapter<PesertaRecycler
 
         holder.nama1.setText(list.get(position).getNama());
         holder.code1.setText(list.get(position).getCode());
-        holder.hadir1.setText(list.get(position).getCode());
+
+        if (list.get(position).getHadir() != true){
+            holder.hadir1.setText("NOT YET");
+        }else{
+            holder.hadir1.setText("HADIR");
+        }
 
     }
 
@@ -51,6 +56,7 @@ public class PesertaRecyclerAdapter extends RecyclerView.Adapter<PesertaRecycler
             super (itemView);
             nama1 = itemView.findViewById(R.id.text_NamaPeserta);
             code1 = itemView.findViewById(R.id.text_CodePeserta);
+            hadir1 = itemView.findViewById(R.id.text_Kehadiran);
         }
     }
 }

@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
@@ -21,11 +23,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ManualActivity extends AppCompatActivity {
 
-    EditText text_Nama;
+    TextView text_Nama;
     EditText text_Code;
-    CheckBox checkBox;
-    Button btn_Submit;
-    DatabaseReference databaseReference;
+    Button btn_Refresh,btn_Submit;
+    DatabaseReference databaseReference,namaNama;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,38 +38,80 @@ public class ManualActivity extends AppCompatActivity {
         //Assign Nama
         text_Nama   = findViewById(R.id.text_Nama);
         text_Code   = findViewById(R.id.text_Code);
-        checkBox    = findViewById(R.id.btn_Check);
-        btn_Submit  = findViewById(R.id.btn_Submit1);
+        btn_Refresh  = findViewById(R.id.btn_Refresh1);
+        btn_Submit = findViewById(R.id.btn_Submit1);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("data");
-        btn_Submit.setOnClickListener(new View.OnClickListener() {
+        //namaNama = databaseReference.child(code);
+
+        //String code = text_Code.getText().toString().trim().toUpperCase();
+
+        btn_Refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addData();
+                final Boolean hadir1 = true;
+                final String hadir = "hadir";
+                final String code = text_Code.getText().toString().trim().toUpperCase();
+
+
+                if (TextUtils.isEmpty(code)){
+                    Toast.makeText(ManualActivity.this,"DATA KOSONG", Toast.LENGTH_LONG).show();
+                }
+
+
+            databaseReference.child(code).child("nama").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final String nama = dataSnapshot.getValue(String.class);
+                text_Nama.setText(nama);
+
+                btn_Submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!TextUtils.isEmpty(code) && !TextUtils.isEmpty(nama)){
+                            databaseReference.child(code).child("hadir").setValue(true);
+                            setResult(001);
+                            finish();
+                        }
+                    }
+                });
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                Log.w("onCancelled", databaseError.toException());
             }
         });
 
+
+
+            }
+        });
     }
 
-    private void addData(){
-
-        String nama = text_Nama.getText().toString().trim().toUpperCase();
-        String code = text_Code.getText().toString().trim().toUpperCase();
-        Boolean hadir = true;
 
 
-        if (!TextUtils.isEmpty(nama) && checkBox.isChecked() && !TextUtils.isEmpty(code)){
+    //
 
-            Data data = new Data(nama,code,hadir);
-            databaseReference.child(code).setValue(data);
-
-            Toast.makeText(this,"Berhasil Input", Toast.LENGTH_LONG).show();
-
-            finish();
-        }else {
-            Toast.makeText(this,"Input Invalid", Toast.LENGTH_LONG).show();
-        }
-
-
-    }
+//    private void addData(){
+//
+//            String nama = text_Nama.getText().toString().trim().toUpperCase();
+//
+//
+//        if (checkBox.isChecked() && !TextUtils.isEmpty(code)){
+//
+//
+////
+//            finish();
+//        }else {
+//
+//        }
+//
+//
+//    }
 }

@@ -5,7 +5,7 @@ import android.widget.TextView;
 public class Data {
     String nama;
     String code;
-    boolean hadir=false;
+    boolean hadir;
 
     public Data(){}
 
