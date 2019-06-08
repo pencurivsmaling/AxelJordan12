@@ -52,13 +52,14 @@ public class ManualActivity extends AppCompatActivity {
 
     private void addData(){
 
-        String nama = text_Nama.getText().toString().trim();
-        String code = text_Code.getText().toString().trim();
+        String nama = text_Nama.getText().toString().trim().toUpperCase();
+        String code = text_Code.getText().toString().trim().toUpperCase();
+        Boolean hadir = true;
 
 
         if (!TextUtils.isEmpty(nama) && checkBox.isChecked() && !TextUtils.isEmpty(code)){
 
-            Data data = new Data(nama,code);
+            Data data = new Data(nama,code,hadir);
             databaseReference.child(code).setValue(data);
 
             Toast.makeText(this,"Berhasil Input", Toast.LENGTH_LONG).show();

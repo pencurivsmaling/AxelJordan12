@@ -5,12 +5,14 @@ import android.widget.TextView;
 public class Data {
     String nama;
     String code;
+    boolean hadir=false;
 
     public Data(){}
 
-    public Data(String nama, String code) {
+    public Data(String nama, String code,boolean hadir) {
         this.nama = nama;
         this.code = code;
+        this.hadir = hadir;
     }
 
     public String getNama() {
@@ -20,4 +22,6 @@ public class Data {
     public String getCode() {
         return code;
     }
+
+    public boolean getHadir() { return hadir; }
 }

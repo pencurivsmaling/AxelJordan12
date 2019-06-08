@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_Detect;
     Button btn_Manual;
     Button btn_Peserta;
+    Button btn_Delete;
     public static final int PERMISSION_REQUEST=200;
 
     @Override
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         btn_Detect = findViewById(R.id.btn_Detect);
         btn_Manual = findViewById(R.id.btn_Manual);
         btn_Peserta = findViewById(R.id.btn_Peserta);
+        btn_Delete = findViewById(R.id.btn_Delete);
 
         //Request Acces ke Camera
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
@@ -63,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PesertaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_Delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, DeleteActivity.class);
                 startActivity(intent);
             }
         });

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class PesertaRecyclerAdapter extends RecyclerView.Adapter<PesertaRecycler
 
         holder.nama1.setText(list.get(position).getNama());
         holder.code1.setText(list.get(position).getCode());
+        holder.hadir1.setText(list.get(position).getCode());
+
     }
 
     @Override
@@ -43,7 +46,7 @@ public class PesertaRecyclerAdapter extends RecyclerView.Adapter<PesertaRecycler
 
     class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView nama1,code1;
+        TextView nama1,code1,hadir1;
         public MyViewHolder(@NonNull View itemView){
             super (itemView);
             nama1 = itemView.findViewById(R.id.text_NamaPeserta);
