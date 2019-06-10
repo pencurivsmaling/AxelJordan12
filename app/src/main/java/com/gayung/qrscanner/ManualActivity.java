@@ -26,7 +26,7 @@ public class ManualActivity extends AppCompatActivity {
     TextView text_Nama;
     EditText text_Code;
     Button btn_Refresh,btn_Submit;
-    DatabaseReference databaseReference,namaNama;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +42,15 @@ public class ManualActivity extends AppCompatActivity {
         btn_Submit = findViewById(R.id.btn_Submit1);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("data");
-        //namaNama = databaseReference.child(code);
-
-        //String code = text_Code.getText().toString().trim().toUpperCase();
 
         btn_Refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Boolean hadir1 = true;
-                final String hadir = "hadir";
                 final String code = text_Code.getText().toString().trim().toUpperCase();
 
 
                 if (TextUtils.isEmpty(code)){
-                    Toast.makeText(ManualActivity.this,"DATA KOSONG", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ManualActivity.this,"Harap Masukan Kode", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -68,7 +63,6 @@ public class ManualActivity extends AppCompatActivity {
                 btn_Submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         if (!TextUtils.isEmpty(code) && !TextUtils.isEmpty(nama)){
                             databaseReference.child(code).child("hadir").setValue(true);
                             setResult(001);
@@ -76,42 +70,15 @@ public class ManualActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
                 Log.w("onCancelled", databaseError.toException());
             }
         });
 
-
-
             }
         });
     }
-
-
-
-    //
-
-//    private void addData(){
-//
-//            String nama = text_Nama.getText().toString().trim().toUpperCase();
-//
-//
-//        if (checkBox.isChecked() && !TextUtils.isEmpty(code)){
-//
-//
-////
-//            finish();
-//        }else {
-//
-//        }
-//
-//
-//    }
 }

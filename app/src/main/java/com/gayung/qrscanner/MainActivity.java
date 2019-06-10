@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, DeleteActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE);
             }
         });
     }
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 001 || resultCode == 001){
-            Toast.makeText(this,"DATA INPUT BERHASIL", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"DATA BERHASIL DIUBAH", Toast.LENGTH_LONG).show();
         }
     }
 }

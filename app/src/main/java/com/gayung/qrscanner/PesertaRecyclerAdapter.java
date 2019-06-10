@@ -36,11 +36,10 @@ public class PesertaRecyclerAdapter extends RecyclerView.Adapter<PesertaRecycler
         holder.code1.setText(list.get(position).getCode());
 
         if (list.get(position).getHadir() != true){
-            holder.hadir1.setText("NOT YET");
+            holder.hadir1.setText("BELUM HADIR");
         }else{
             holder.hadir1.setText("HADIR");
         }
-
     }
 
     @Override

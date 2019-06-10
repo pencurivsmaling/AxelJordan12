@@ -58,10 +58,6 @@ public class PesertaActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewPeserta);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
-
     }
 
     @Override
