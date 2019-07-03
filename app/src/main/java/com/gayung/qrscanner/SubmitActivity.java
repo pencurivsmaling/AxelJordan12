@@ -1,7 +1,9 @@
 package com.gayung.qrscanner;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -55,10 +57,33 @@ public class SubmitActivity extends AppCompatActivity {
                 Intent intent = new Intent(SubmitActivity.this,ScanActivity.class);
                 startActivityForResult(intent,REQUEST_CODE);
 
+
             }
         });
         
 
+    }
+
+    private void peringatan(){
+
+        AlertDialog.Builder peringatan = new AlertDialog.Builder(this);
+
+        peringatan.setTitle("PERINGATAN");
+
+        peringatan
+                .setMessage("PESERTA SUDAH BERSTATUS HADIR!")
+                .setCancelable(false)
+                .setNeutralButton("Oke", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = peringatan.create();
+        if (!isFinishing()) {
+            dialog.show();
+        }
     }
 
     //Setelah hasil Barcode terbaca
@@ -76,6 +101,21 @@ public class SubmitActivity extends AppCompatActivity {
 
                         final String code = result.getText().toString().toUpperCase();
                         final Boolean hadir1 = true;
+
+                        databaseReference.child(code).child("hadir").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Boolean kehadiran = dataSnapshot.getValue(Boolean.class);
+                                if (kehadiran==true){
+                                    peringatan();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
 
                         databaseReference.child(code).child("nama").addValueEventListener(new ValueEventListener() {
                             @Override

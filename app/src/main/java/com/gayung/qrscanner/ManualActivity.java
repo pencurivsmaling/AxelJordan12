@@ -1,7 +1,9 @@
 package com.gayung.qrscanner;
 
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -48,6 +50,22 @@ public class ManualActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String code = text_Code.getText().toString().trim().toUpperCase();
 
+                databaseReference.child(code).child("hadir").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Boolean kehadiran = dataSnapshot.getValue(Boolean.class);
+                        if (kehadiran==true){
+                            peringatan();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
 
                 if (TextUtils.isEmpty(code)){
                     Toast.makeText(ManualActivity.this,"Harap Masukan Kode", Toast.LENGTH_LONG).show();
@@ -63,6 +81,7 @@ public class ManualActivity extends AppCompatActivity {
                 btn_Submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         if (!TextUtils.isEmpty(code) && !TextUtils.isEmpty(nama)){
                             databaseReference.child(code).child("hadir").setValue(true);
                             setResult(001);
@@ -80,5 +99,27 @@ public class ManualActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void peringatan(){
+
+        AlertDialog.Builder peringatan = new AlertDialog.Builder(this);
+
+        peringatan.setTitle("PERINGATAN");
+
+        peringatan
+                .setMessage("PESERTA SUDAH STATUS HADIR")
+                .setCancelable(false)
+                .setNeutralButton("Oke", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                       dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = peringatan.create();
+        if(!isFinishing()) {
+            dialog.show();
+        }
     }
 }
